@@ -13,25 +13,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WelcomeController {
 
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+  @Autowired
+  private JwtUtil jwtUtil;
+  @Autowired
+  private AuthenticationManager authenticationManager;
 
-    @GetMapping("/")
-    public String welcome() {
-        return "Welcome to javatechie !!";
-    }
+  @GetMapping("/")
+  public String welcome() {
+    return "Welcome to javatechie !!";
+  }
 
-    @PostMapping("/authenticate")
-    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
-            );
-        } catch (Exception ex) {
-            throw new Exception("inavalid username/password");
-        }
-        return jwtUtil.generateToken(authRequest.getUserName());
+  @PostMapping("/authenticate")
+  public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+    try {
+      authenticationManager.authenticate(
+          new UsernamePasswordAuthenticationToken(authRequest.getUserName(),
+              authRequest.getPassword())
+      );
+    } catch (Exception ex) {
+      throw new Exception("inavalid username/password");
     }
+    return jwtUtil.generateToken(authRequest.getUserName());
+  }
 }
