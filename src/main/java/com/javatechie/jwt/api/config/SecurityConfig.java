@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends
@@ -27,7 +29,7 @@ public class SecurityConfig extends
  @Autowired
  private JwtFilter jwtFilter;
 
- @Override
+ /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
  protected void configure(
      AuthenticationManagerBuilder auth)
      throws Exception {
@@ -35,7 +37,7 @@ public class SecurityConfig extends
       userDetailsService);
  }
 
- @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+ /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
  @Override
  public AuthenticationManager authenticationManagerBean()
      throws Exception {
@@ -46,20 +48,16 @@ public class SecurityConfig extends
  protected void configure(
      HttpSecurity http)
      throws Exception {
-  http.csrf()
-      .disable()
-      .authorizeRequests()
-      .antMatchers(
-          "/authenticate")
-      .permitAll()
-      .anyRequest()
-      .authenticated()
-      .and()
-      .exceptionHandling()
-      .and()
-      .sessionManagement()
-      .sessionCreationPolicy(
-          SessionCreationPolicy.STATELESS);
+  http.csrf(csrf -> csrf
+      .authorizeRequests(requests -> requests
+          .requestMatchers("/authenticate")
+          .permitAll()
+          .anyRequest()
+          .authenticated())
+      .exceptionHandling(withDefaults())
+      .sessionManagement(management -> management
+          .sessionCreationPolicy(
+              SessionCreationPolicy.STATELESS)));
   http.addFilterBefore(
       jwtFilter,
       UsernamePasswordAuthenticationFilter.class);
