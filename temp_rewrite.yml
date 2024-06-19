@@ -1,0 +1,25 @@
+#---
+#type: specs.openrewrite.org/v1beta/style
+#name: com.project.codestyle
+#displayName: Standard Project Code Style
+#styleConfigs:
+#  - org.openrewrite.style.GeneralFormatStyle:
+#      useCRLFNewLines: false
+#  - org.openrewrite.java.style.NormalizeLineBreaks:
+#      useCRLFNewLines: false
+#  - org.openrewrite.java.style.ImportLayoutStyle:
+#      classCountToUseStarImport: 999
+#      nameCountToUseStarImport: 999
+#      layout:
+#        - import all other imports
+#        - <blank line>
+#        - import javax.*
+#        - import java.*
+#        - <blank line>
+#        - import static all other imports
+#  - org.openrewrite.java.style.TabsAndIndentsStyle:
+#      useTabCharacter: false
+#      tabSize: 4
+#      indentSize: 4
+#      continuationIndent: 8
+#      indentsRelativeToExpressionStart: false

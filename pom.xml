@@ -13,15 +13,7 @@
         <artifactId>rewrite-maven-plugin</artifactId>
         <configuration>
           <activeRecipes>
-            <!-- Recipes here -->
-            <recipe>org.openrewrite.java.format.AutoFormat</recipe>
-            <recipe>org.openrewrite.java.format.RemoveTrailingWhitespace</recipe>
-            <recipe>org.openrewrite.java.format.NormalizeLineBreaks</recipe>
-            <recipe>org.openrewrite.java.format.EmptyNewlineAtEndOfFile</recipe>
-            <recipe>org.openrewrite.java.format.TabsAndIndents</recipe>
-            <recipe>org.openrewrite.java.format.NormalizeTabsOrSpaces</recipe>
-            <recipe>org.openrewrite.java.OrderImports</recipe>
-            <recipe>org.openrewrite.java.format.BlankLines</recipe>
+            <recipe>org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_2</recipe>
           </activeRecipes>
           <activeStyles>
             <!-- This style is made up for sake of example. It isn't packaged with OpenRewrite -->
@@ -31,6 +23,13 @@
             <exclude>**/*.json</exclude>
           </exclusions>
         </configuration>
+        <dependencies>
+          <dependency>
+            <artifactId>rewrite-spring</artifactId>
+            <groupId>org.openrewrite.recipe</groupId>
+            <version>5.12.0</version>
+          </dependency>
+        </dependencies>
         <groupId>org.openrewrite.maven</groupId>
         <version>5.33.0</version>
       </plugin>
