@@ -29,7 +29,8 @@ public class SecurityConfig extends
  @Autowired
  private JwtFilter jwtFilter;
 
- /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
+ /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/
+ @Override
  protected void configure(
      AuthenticationManagerBuilder auth)
      throws Exception {
@@ -37,7 +38,8 @@ public class SecurityConfig extends
       userDetailsService);
  }
 
- /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+ /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/
+ @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
  @Override
  public AuthenticationManager authenticationManagerBean()
      throws Exception {
@@ -49,15 +51,19 @@ public class SecurityConfig extends
      HttpSecurity http)
      throws Exception {
   http.csrf(csrf -> csrf
-      .authorizeRequests(requests -> requests
-          .requestMatchers("/authenticate")
-          .permitAll()
-          .anyRequest()
-          .authenticated())
-      .exceptionHandling(withDefaults())
-      .sessionManagement(management -> management
-          .sessionCreationPolicy(
-              SessionCreationPolicy.STATELESS)));
+      .authorizeRequests(
+          requests -> requests
+              .requestMatchers(
+                  "/authenticate")
+              .permitAll()
+              .anyRequest()
+              .authenticated())
+      .exceptionHandling(
+          withDefaults())
+      .sessionManagement(
+          management -> management
+              .sessionCreationPolicy(
+                  SessionCreationPolicy.STATELESS)));
   http.addFilterBefore(
       jwtFilter,
       UsernamePasswordAuthenticationFilter.class);
