@@ -9,6 +9,31 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <groupId>org.springframework.boot</groupId>
       </plugin>
+      <plugin>
+        <artifactId>rewrite-maven-plugin</artifactId>
+        <configuration>
+          <activeRecipes>
+            <!-- Recipes here -->
+            <recipe>org.openrewrite.java.format.AutoFormat</recipe>
+            <recipe>org.openrewrite.java.format.RemoveTrailingWhitespace</recipe>
+            <recipe>org.openrewrite.java.format.NormalizeLineBreaks</recipe>
+            <recipe>org.openrewrite.java.format.EmptyNewlineAtEndOfFile</recipe>
+            <recipe>org.openrewrite.java.format.TabsAndIndents</recipe>
+            <recipe>org.openrewrite.java.format.NormalizeTabsOrSpaces</recipe>
+            <recipe>org.openrewrite.java.OrderImports</recipe>
+            <recipe>org.openrewrite.java.format.BlankLines</recipe>
+          </activeRecipes>
+          <activeStyles>
+            <!-- This style is made up for sake of example. It isn't packaged with OpenRewrite -->
+            <style>com.project.codestyle</style>
+          </activeStyles>
+          <exclusions>
+            <exclude>**/*.json</exclude>
+          </exclusions>
+        </configuration>
+        <groupId>org.openrewrite.maven</groupId>
+        <version>5.33.0</version>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
