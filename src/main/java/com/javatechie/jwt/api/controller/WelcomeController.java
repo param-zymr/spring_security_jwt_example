@@ -24,14 +24,19 @@ public class WelcomeController {
  }
 
  @PostMapping("/authenticate")
- public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+ public String generateToken(
+     @RequestBody AuthRequest authRequest)
+     throws Exception {
   try {
    authenticationManager.authenticate(
-       new UsernamePasswordAuthenticationToken(authRequest.getUserName(),
+       new UsernamePasswordAuthenticationToken(
+           authRequest.getUserName(),
            authRequest.getPassword()));
   } catch (Exception ex) {
-   throw new Exception("inavalid username/password");
+   throw new Exception(
+       "inavalid username/password");
   }
-  return jwtUtil.generateToken(authRequest.getUserName());
+  return jwtUtil.generateToken(
+      authRequest.getUserName());
  }
 }
